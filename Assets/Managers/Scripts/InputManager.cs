@@ -16,7 +16,7 @@ public static class InputManager
         {
             public static string horizontal = "P2HorizontalKey";
             public static string jump = "P2JumpKey";
-            public static string crouch = "P1CrouchKey";
+            public static string crouch = "P2CrouchKey";
         }
 
         public static class P1

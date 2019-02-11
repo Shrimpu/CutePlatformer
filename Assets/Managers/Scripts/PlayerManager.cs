@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerPrefabManager))]
 public class PlayerManager : MonoBehaviour
 {
+    public delegate void PlayersInSceneChanged(int players);
+    public static PlayersInSceneChanged playersInSceneChanged;
+
+    public GameObject spawnEffect;
+
     public static int players;
     PlayerPrefabManager prefabManager;
     Vector3 spawnPoint;
@@ -52,30 +57,68 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnPlayer(int i)
     {
-        if (spawnPoint != null)
+        if (spawnPoint == Vector3.zero)
+        {
+            Debug.LogWarning("No Spawnpoint in scene");
+            spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform.position;
+        }
+
+        if (spawnPoint != Vector3.zero)
         {
             GameObject spawnedPlayer = Instantiate(prefabManager.GetPlayer(players), spawnPoint, Quaternion.identity);
+            if (spawnEffect != null)
+                Instantiate(spawnEffect, spawnedPlayer.transform.position, Quaternion.identity);
             Movement m = spawnedPlayer.GetComponent<Movement>();
             m.playerInputID = i;
-            m.playerID = players;
+            //m.playerID = players;
 
             players++;
 
-            if (i == 1)
-                playerSpawned1 = true;
-            if (i == 2)
-                playerSpawned2 = true;
-            if (i == 3)
-                playerSpawned3 = true;
-            if (i == 4)
-                playerSpawned4 = true;
-            if (i == 5)
-                playerSpawned5 = true;
-            if (i == 6)
-                playerSpawned6 = true;
+            switch (i)
+            {
+                case 1:
+                    playerSpawned1 = true;
+                    m.horizontal = InputManager.CustomInputs.P1Keyboard.horizontal;
+                    m.jump = InputManager.CustomInputs.P1Keyboard.jump;
+                    m.crouch = InputManager.CustomInputs.P1Keyboard.crouch;
+                    break;
+                case 2:
+                    playerSpawned2 = true;
+                    m.horizontal = InputManager.CustomInputs.P2Keyboard.horizontal;
+                    m.jump = InputManager.CustomInputs.P2Keyboard.jump;
+                    m.crouch = InputManager.CustomInputs.P2Keyboard.crouch;
+                    break;
+                case 3:
+                    playerSpawned3 = true;
+                    m.horizontal = InputManager.CustomInputs.P1.horizontal;
+                    m.jump = InputManager.CustomInputs.P1.jump;
+                    m.crouch = InputManager.CustomInputs.P1.crouch;
+                    break;
+                case 4:
+                    playerSpawned4 = true;
+                    m.horizontal = InputManager.CustomInputs.P2.horizontal;
+                    m.jump = InputManager.CustomInputs.P2.jump;
+                    m.crouch = InputManager.CustomInputs.P2.crouch;
+                    break;
+                case 5:
+                    playerSpawned5 = true;
+                    m.horizontal = InputManager.CustomInputs.P3.horizontal;
+                    m.jump = InputManager.CustomInputs.P3.jump;
+                    m.crouch = InputManager.CustomInputs.P3.crouch;
+                    break;
+                case 6:
+                    playerSpawned6 = true;
+                    m.horizontal = InputManager.CustomInputs.P4.horizontal;
+                    m.jump = InputManager.CustomInputs.P4.jump;
+                    m.crouch = InputManager.CustomInputs.P4.crouch;
+                    break;
+                default:
+                    Debug.LogError("Inputs not assigned!");
+                    break;
+            }
+
+            playersInSceneChanged?.Invoke(players);
         }
-        else
-            Debug.LogWarning("No Spawnpoint in scene");
     }
 
     #region Remove Player Buttons
@@ -119,6 +162,8 @@ public class PlayerManager : MonoBehaviour
             players--;
 
             Destroy(player[i].gameObject);
+
+            playersInSceneChanged?.Invoke(players);
         }
     }
 
