@@ -60,8 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Effects\Conveyor.cs" />
+    <Compile Include="Assets\Hazards\KillPlayerOnContact.cs" />
+    <Compile Include="Assets\Hazards\Projectile\Projectile.cs" />
+    <Compile Include="Assets\Hazards\Saw\CircleMovement.cs" />
     <Compile Include="Assets\Hazards\Saw\MovingSawblade.cs" />
-    <Compile Include="Assets\Hazards\Saw\Sawblade.cs" />
+    <Compile Include="Assets\Hazards\Thwomp\Thwomp.cs" />
+    <Compile Include="Assets\Hazards\Turret\Turret.cs" />
     <Compile Include="Assets\Managers\Scripts\InputManager.cs" />
     <Compile Include="Assets\Managers\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Managers\Scripts\PlayerPrefabManager.cs" />

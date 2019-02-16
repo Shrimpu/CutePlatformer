@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
@@ -40,7 +42,9 @@ public class Movement : MonoBehaviour
     Transform headPos;
 
     public GameObject defaultSoftSpot;
-    public GameObject crouchingSoftSpot;
+    public GameObject crouchSoftSpot;
+    public GameObject defaultColliders;
+    public GameObject crouchColliders;
 
     [HideInInspector]
     public string horizontal;
@@ -59,10 +63,12 @@ public class Movement : MonoBehaviour
     bool jumping;
 
     Rigidbody2D rb;
+    Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         headPos = defaultHeadPos;
 
         jumpPhysics.CalculateGravity();
@@ -74,20 +80,31 @@ public class Movement : MonoBehaviour
         CheckCollisions();
         GetInputs();
         Move();
+        Animate();
 
         if (isCrouching) // this section of code is poorly optimized
         {
             headPos = crouchedHeadPos; // could set all this using events in animation, just need to put them in functions first
+            crouchSoftSpot.SetActive(true);
             defaultSoftSpot.SetActive(false);
-            crouchingSoftSpot.SetActive(true);
+            crouchColliders.SetActive(true);
+            defaultColliders.SetActive(false);
         }
         else
         {
             headPos = defaultHeadPos;
             defaultSoftSpot.SetActive(true);
-            crouchingSoftSpot.SetActive(false);
+            crouchSoftSpot.SetActive(false);
+            defaultColliders.SetActive(true);
+            crouchColliders.SetActive(false);
         }
 
+    }
+
+    private void Animate()
+    {
+        animator.SetBool("Running", xInput != 0);
+        animator.SetBool("Crouching", isCrouching);
     }
 
     void CheckCollisions()
@@ -142,15 +159,14 @@ public class Movement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(feetPos.position, jumpCheckRadius);
+
+        Gizmos.color = Color.cyan;
         if (headPos != null)
             Gizmos.DrawWireSphere(headPos.position, headCheckRadius);
-        else
-        {
-            Gizmos.DrawWireSphere(defaultHeadPos.position, headCheckRadius);
-            Gizmos.DrawWireSphere(crouchedHeadPos.position, headCheckRadius);
-        }
 
+        Gizmos.color = Color.yellow;
         Gizmos.DrawLine(frontPos.position + (transform.up * walldetectionHeight / 2) + (transform.right * walldetectionWidth / 2),
             frontPos.position + (-transform.up * walldetectionHeight / 2) + (-transform.right * walldetectionWidth / 2));
         Gizmos.DrawLine(frontPos.position - (transform.up * walldetectionHeight / 2) + (transform.right * walldetectionWidth / 2),

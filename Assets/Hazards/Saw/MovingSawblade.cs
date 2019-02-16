@@ -27,6 +27,8 @@ public class MovingSawblade : MonoBehaviour
             {
                 for (int i = 0; i < checkpoints.Length; i++)
                 {
+                    if (!closedLoop)
+                        break;
                     while (sawblade.position != checkpoints[i].position)
                     {
                         sawblade.position = Vector3.MoveTowards(sawblade.position, checkpoints[i].position, speed * Time.deltaTime);
@@ -38,6 +40,8 @@ public class MovingSawblade : MonoBehaviour
             {
                 for (int i = 0; i < checkpoints.Length; i++)
                 {
+                    if (closedLoop)
+                        break;
                     while (sawblade.position != checkpoints[i].position)
                     {
                         sawblade.position = Vector3.MoveTowards(sawblade.position, checkpoints[i].position, speed * Time.deltaTime);
@@ -46,6 +50,8 @@ public class MovingSawblade : MonoBehaviour
                 }
                 for (int i = checkpoints.Length - 1; i >= 0; i--)
                 {
+                    if (closedLoop)
+                        break;
                     while (sawblade.position != checkpoints[i].position)
                     {
                         sawblade.position = Vector3.MoveTowards(sawblade.position, checkpoints[i].position, speed * Time.deltaTime);

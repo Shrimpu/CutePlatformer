@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerPrefabManager))]
 public class PlayerManager : MonoBehaviour
 {
-    public delegate void PlayersInSceneChanged(int players);
-    public static PlayersInSceneChanged playersInSceneChanged;
+    public static event System.Action PlayersInSceneChanged;
 
     public GameObject spawnEffect;
 
@@ -117,7 +116,7 @@ public class PlayerManager : MonoBehaviour
                     break;
             }
 
-            playersInSceneChanged?.Invoke(players);
+            PlayersInSceneChanged?.Invoke();
         }
     }
 
@@ -163,7 +162,7 @@ public class PlayerManager : MonoBehaviour
 
             Destroy(player[i].gameObject);
 
-            playersInSceneChanged?.Invoke(players);
+            PlayersInSceneChanged?.Invoke();
         }
     }
 

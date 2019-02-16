@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class OnPlayerDeath : MonoBehaviour
 {
+    public delegate void KilledPlayerInfo(GameObject player);
+    public static KilledPlayerInfo PlayerKilled;
+
     public GameObject bloodEffect;
     public GameObject spawnEffect;
     public float respawnTime = 0.6f;
@@ -26,8 +29,8 @@ public class OnPlayerDeath : MonoBehaviour
     {
         if (bloodEffect != null)
             Instantiate(bloodEffect, player.transform.position, Quaternion.identity);
-
         player.SetActive(false);
+        PlayerKilled?.Invoke(player);
 
         yield return new WaitForSeconds(respawnTime);
 
