@@ -251,6 +251,7 @@ MonoBehaviour:
     minJumpHeight: 1
     timeToJumpApex: 0.15
     jumpTime: 0.2
+    numberOfJumps: 2
   jumpCheckRadius: 0.24
   headCheckRadius: 0.3485
   walldetectionHeight: 1.15

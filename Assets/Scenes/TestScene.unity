@@ -999,7 +999,7 @@ PrefabInstance:
     - target: {fileID: 7770671273985155543, guid: ed79dd9331076814a8454daa4a64d074,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.15429688
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7770671273985155543, guid: ed79dd9331076814a8454daa4a64d074,
         type: 3}
@@ -1043,13 +1043,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7770671273985155540, guid: ed79dd9331076814a8454daa4a64d074,
         type: 3}
-      propertyPath: fallSpeed
+      propertyPath: detectionWidth
       value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 7770671273985155540, guid: ed79dd9331076814a8454daa4a64d074,
         type: 3}
-      propertyPath: ascendSpeed
-      value: 0.065
+      propertyPath: detectionHeight
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed79dd9331076814a8454daa4a64d074, type: 3}

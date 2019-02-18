@@ -28,9 +28,6 @@ public class Conveyor : MonoBehaviour
 
         for (int i = -1; i < 2; i++)
         {
-            //Vector2 origin = transform.position + new Vector3(i * roofDimensions.x / 2, roofDimensions.y + roof.offset.y);
-            //RaycastHit2D[] hit = Physics2D.RaycastAll(origin, Vector3.up, 0.2f, playerMask);
-            //Debug.DrawLine(origin, origin + (Vector2.up * 0.1f), Color.blue);
             Collider2D[] players = Physics2D.OverlapAreaAll(col.bounds.max + Vector3.up * col.bounds.size.y * effectHeight, col.bounds.min + Vector3.up * col.bounds.size.y);
 
             for (int j = 0; j < players.Length; j++)

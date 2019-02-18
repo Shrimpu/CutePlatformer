@@ -15,9 +15,10 @@ public class CircleMovement : MonoBehaviour
     [Space]
     public Transform centerObject;
 
-    Vector3 localCenter;
+    [HideInInspector]
+    public Vector3 localCenter;
 
-    void Start()
+    void Awake()
     {
         localCenter = transform.position;
     }

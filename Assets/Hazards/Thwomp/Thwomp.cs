@@ -15,12 +15,15 @@ public class Thwomp : MonoBehaviour
     public float fallSpeed = 0.6f;
     public float ascendSpeed = 0.2f;
     public float cooldownTime;
+    public float detectionWidth = 0.2f;
+    public float detectionHeight = 10f;
     [Space]
     public LayerMask visibilityMask;
     public LayerMask playerMask;
     public LayerMask groundMask;
 
     public BoxCollider2D roof;
+    public BoxCollider2D mainCollider;
 
     Vector2 roofDimensions;
 
@@ -37,16 +40,23 @@ public class Thwomp : MonoBehaviour
         {
             if (!constantLoop)
             {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100f, visibilityMask);
-                if (hit.collider.CompareTag("PlayerCollider"))
-                {
-                    StartCoroutine(Attack());
-                }
+                SearchPlayers(mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2 + Vector3.right * detectionWidth);
+                SearchPlayers(mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2 + Vector3.left * detectionWidth);
+                SearchPlayers(transform.position);
             }
             else
             {
                 StartCoroutine(Attack());
             }
+        }
+    }
+
+    void SearchPlayers(Vector3 origin)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, detectionHeight, playerMask);
+        if (hit)
+        {
+            StartCoroutine(Attack());
         }
     }
 
@@ -81,14 +91,14 @@ public class Thwomp : MonoBehaviour
         Vector2 startPos = transform.position;
         Vector2 endPos;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 35f, groundMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, detectionHeight, groundMask);
         if (hit)
         {
             endPos = hit.point;
         }
         else
         {
-            endPos = -transform.up * 35f;
+            endPos = -transform.up * detectionHeight;
         }
 
         bool destinationReached = false;
@@ -128,12 +138,13 @@ public class Thwomp : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 100f, visibilityMask);
-        if (hit.collider.CompareTag("PlayerCollider")) Gizmos.color = Color.red;
-        else Gizmos.color = Color.white;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, detectionHeight, visibilityMask);
+        Gizmos.color = Color.white;
 
         if (hit && hit.distance > 0f)
+        {
             Gizmos.DrawLine(transform.position, hit.point);
+        }
         else
         {
             Gizmos.color = Color.red;
@@ -142,5 +153,9 @@ public class Thwomp : MonoBehaviour
             Gizmos.DrawLine(transform.position - (Vector3.up * 0.6f) + (Vector3.right * 0.6f),
                 transform.position + (Vector3.up * 0.6f) - (Vector3.right * 0.6f));
         }
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.right * detectionWidth, mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.right * detectionWidth);
+        Gizmos.DrawLine(mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.left * detectionWidth, mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.left * detectionWidth);
+
     }
 }

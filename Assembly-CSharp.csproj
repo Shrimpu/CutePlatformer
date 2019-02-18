@@ -64,7 +64,10 @@
     <Compile Include="Assets\Hazards\KillPlayerOnContact.cs" />
     <Compile Include="Assets\Hazards\Projectile\Projectile.cs" />
     <Compile Include="Assets\Hazards\Saw\CircleMovement.cs" />
+    <Compile Include="Assets\Hazards\Saw\DrawLines.cs" />
+    <Compile Include="Assets\Hazards\Saw\DrawLineSinglePoint.cs" />
     <Compile Include="Assets\Hazards\Saw\MovingSawblade.cs" />
+    <Compile Include="Assets\Hazards\Spin.cs" />
     <Compile Include="Assets\Hazards\Thwomp\Thwomp.cs" />
     <Compile Include="Assets\Hazards\Turret\Turret.cs" />
     <Compile Include="Assets\Managers\Scripts\InputManager.cs" />

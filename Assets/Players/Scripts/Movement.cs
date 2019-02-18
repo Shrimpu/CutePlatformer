@@ -55,12 +55,14 @@ public class Movement : MonoBehaviour
 
     float xInput;
     float jumpTimeLeft;
+    int jumpsUsed = 0;
 
     bool isGrounded;
     [HideInInspector]
     public bool isCrouching;
     bool jumpRequest;
     bool jumping;
+    bool fell;
 
     Rigidbody2D rb;
     Animator animator;
@@ -112,8 +114,16 @@ public class Movement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(feetPos.position, jumpCheckRadius, ground);
         if (isGrounded)
         {
-            jumpTimeLeft = jumpPhysics.jumpTime;
+            jumpsUsed = 0;
+            fell = false;
         }
+        else if (!isGrounded && !fell && !Input.GetButton(jump))
+        {
+            jumpsUsed++;
+            fell = true;
+        }
+        else if (!fell)
+            fell = true;
 
         canMove = !Physics2D.OverlapArea(frontPos.position + (transform.up * walldetectionHeight / 2) + (transform.right * walldetectionWidth / 2),
             frontPos.position + (-transform.up * walldetectionHeight / 2) + (-transform.right * walldetectionWidth / 2), ground);
@@ -129,10 +139,16 @@ public class Movement : MonoBehaviour
 
         isCrouching = Input.GetButton(crouch);
 
-        if (Input.GetButton(jump) && isGrounded)
+        if (Input.GetButton(jump) && jumpsUsed < jumpPhysics.numberOfJumps)
+        {
             CanJump = true;
+        }
         else if (Input.GetButtonUp(jump))
+        {
             CanJump = false;
+            jumpsUsed++;
+            jumpTimeLeft = jumpPhysics.jumpTime;
+        }
     }
 
     void Move()
@@ -184,6 +200,7 @@ public class Movement : MonoBehaviour
         public float minJumpHeight = 1f;
         public float timeToJumpApex = 0.15f;
         public float jumpTime = 0.3f;
+        public int numberOfJumps = 2;
 
         public void CalculateGravity()
         {
