@@ -7,18 +7,23 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float moveSpeed = 2f;
+    public float lifeTime = 5f;
     public GameObject hitEffect;
 
+    float lifeLeft;
     Rigidbody2D rb;
 
     void Start()
     {
+        lifeLeft = Time.time + lifeTime;
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         rb.velocity = transform.up * moveSpeed;
+        if (lifeLeft < Time.time)
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

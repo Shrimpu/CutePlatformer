@@ -15,8 +15,12 @@ public class Thwomp : MonoBehaviour
     public float fallSpeed = 0.6f;
     public float ascendSpeed = 0.2f;
     public float cooldownTime;
+    public float stopTime = 0.1f;
     public float detectionWidth = 0.2f;
     public float detectionHeight = 10f;
+    [Space]
+    public float camShakeIntensity = 0.1f;
+    public int camShakes = 4;
     [Space]
     public LayerMask visibilityMask;
     public LayerMask playerMask;
@@ -25,6 +29,7 @@ public class Thwomp : MonoBehaviour
     public BoxCollider2D roof;
     public BoxCollider2D mainCollider;
 
+    CameraEffects cameraEffects;
     Vector2 roofDimensions;
 
     ActionState state = ActionState.Standby;
@@ -32,6 +37,7 @@ public class Thwomp : MonoBehaviour
     private void Start()
     {
         roofDimensions = roof.size;
+        cameraEffects = FindObjectOfType<CameraEffects>();
     }
 
     void Update()
@@ -114,6 +120,9 @@ public class Thwomp : MonoBehaviour
         }
         state = ActionState.Recovering;
 
+        if (cameraEffects != null)
+            cameraEffects.Shake(camShakeIntensity, camShakes);
+        yield return new WaitForSeconds(stopTime);
         destinationReached = false;
         while (!destinationReached)
         {
@@ -154,8 +163,10 @@ public class Thwomp : MonoBehaviour
                 transform.position + (Vector3.up * 0.6f) - (Vector3.right * 0.6f));
         }
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.right * detectionWidth, mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.right * detectionWidth);
-        Gizmos.DrawLine(mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.left * detectionWidth, mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.left * detectionWidth);
+        Gizmos.DrawLine(mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.right * detectionWidth,
+            mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.right * detectionWidth);
+        Gizmos.DrawLine(mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.left * detectionWidth,
+            mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2f + Vector3.up * -detectionHeight + Vector3.left * detectionWidth);
 
     }
 }

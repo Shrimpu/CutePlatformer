@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Effects\CameraEffects.cs" />
     <Compile Include="Assets\Effects\Conveyor.cs" />
     <Compile Include="Assets\Hazards\KillPlayerOnContact.cs" />
     <Compile Include="Assets\Hazards\Projectile\Projectile.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Assets\Managers\Scripts\InputManager.cs" />
     <Compile Include="Assets\Managers\Scripts\PlayerManager.cs" />
     <Compile Include="Assets\Managers\Scripts\PlayerPrefabManager.cs" />
+    <Compile Include="Assets\Players\Scripts\DeathOnExit.cs" />
     <Compile Include="Assets\Players\Scripts\Movement.cs" />
     <Compile Include="Assets\Players\Scripts\OnPlayerDeath.cs" />
     <Compile Include="Assets\Players\Scripts\OnStomped.cs" />

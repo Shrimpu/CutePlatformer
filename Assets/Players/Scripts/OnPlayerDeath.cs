@@ -10,18 +10,29 @@ public class OnPlayerDeath : MonoBehaviour
     public GameObject bloodEffect;
     public GameObject spawnEffect;
     public float respawnTime = 0.6f;
+    [Space]
+    public float camShakeIntensity = 0.05f;
+    public int camShakes = 1;
 
-    private Transform respawnPoint;
+    CameraEffects cameraEffects;
+    Transform respawnPoint;
 
     void Start()
     {
         respawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         if (respawnPoint.position == Vector3.zero)
             Debug.LogError("No Respawn In Scene");
+        cameraEffects = FindObjectOfType<CameraEffects>();
     }
 
     public void KillPlayer(GameObject player)
     {
+        if (cameraEffects != null)
+            cameraEffects.Shake(camShakeIntensity, camShakes);
+
+        Movement playerMovement = player.GetComponent<Movement>();
+        playerMovement.CanJump = false; // now the player doesn't jump on respawn
+
         StartCoroutine(PlayerKillEffect(player));
     }
 

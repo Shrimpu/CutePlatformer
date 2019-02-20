@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 3561889352165464331}
   - component: {fileID: 3561889352165464334}
   - component: {fileID: 3252163596027359462}
+  - component: {fileID: 6376813993447434489}
   m_Layer: 9
   m_Name: Refi
   m_TagString: Player
@@ -292,6 +293,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &6376813993447434489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561889352165464330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d18f89d03269d4e994acc43671efa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4039999053261483812
 GameObject:
   m_ObjectHideFlags: 0
