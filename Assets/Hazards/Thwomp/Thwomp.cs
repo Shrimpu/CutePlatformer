@@ -48,7 +48,7 @@ public class Thwomp : MonoBehaviour
             {
                 SearchPlayers(mainCollider.bounds.max - Vector3.up * mainCollider.bounds.size.y / 2 + Vector3.right * detectionWidth);
                 SearchPlayers(mainCollider.bounds.min + Vector3.up * mainCollider.bounds.size.y / 2 + Vector3.left * detectionWidth);
-                SearchPlayers(transform.position);
+                SearchPlayers(transform.position - Vector3.up * mainCollider.bounds.size.y / 2f);
             }
             else
             {
@@ -100,7 +100,7 @@ public class Thwomp : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, detectionHeight, groundMask);
         if (hit)
         {
-            endPos = hit.point;
+            endPos = hit.point + Vector2.up * mainCollider.bounds.size.y / 2f;
         }
         else
         {
@@ -152,7 +152,7 @@ public class Thwomp : MonoBehaviour
 
         if (hit && hit.distance > 0f)
         {
-            Gizmos.DrawLine(transform.position, hit.point);
+            Gizmos.DrawLine(transform.position - Vector3.up * mainCollider.bounds.size.y / 2f, hit.point);
         }
         else
         {
