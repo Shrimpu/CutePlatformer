@@ -166,10 +166,10 @@ MonoBehaviour:
   constantLoop: 0
   fallSpeed: 0.22
   ascendSpeed: 0.065
-  cooldownTime: 0.2
-  stopTime: 0.1
-  detectionWidth: 0.2
-  detectionHeight: 10
+  cooldownTime: 0.4
+  stopTime: 0.25
+  detectionWidth: 0.51
+  detectionHeight: 3.72
   camShakeIntensity: 0.1
   camShakes: 4
   visibilityMask:

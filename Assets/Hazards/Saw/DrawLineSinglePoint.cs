@@ -34,5 +34,7 @@ public class DrawLineSinglePoint : MonoBehaviour
     void LateUpdate()
     {
         lineRenderer.SetPosition(0, transform.position);
+        if (target != null)
+            lineRenderer.SetPosition(1, target.position);
     }
 }

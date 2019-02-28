@@ -9,16 +9,28 @@ public class Conveyor : MonoBehaviour
     public bool left;
     public float effectHeight = 0.3f;
     public LayerMask playerMask;
+    [Space]
+    public Texture leftTex;
+    public Texture rightTex;
 
     BoxCollider2D col;
+    Material mat;
 
     void Start()
     {
         col = GetComponent<BoxCollider2D>();
+        mat = GetComponent<Renderer>().material;
+
+        mat.mainTextureScale = new Vector2(transform.localScale.x, 1);
     }
 
     void FixedUpdate()
     {
+        mat.mainTextureOffset += Vector2.left * (left ? -speed : speed) * Time.deltaTime;
+        if (left)
+            mat.mainTexture = leftTex;
+        else
+            mat.mainTexture = rightTex;
         MovePassangers();
     }
 
@@ -28,7 +40,7 @@ public class Conveyor : MonoBehaviour
 
         for (int i = -1; i < 2; i++)
         {
-            Collider2D[] players = Physics2D.OverlapAreaAll(col.bounds.max + Vector3.up * col.bounds.size.y * effectHeight, col.bounds.min + Vector3.up * col.bounds.size.y);
+            Collider2D[] players = Physics2D.OverlapAreaAll(col.bounds.max + Vector3.up * effectHeight, col.bounds.min + Vector3.up * col.bounds.size.y);
 
             for (int j = 0; j < players.Length; j++)
             {
@@ -48,10 +60,9 @@ public class Conveyor : MonoBehaviour
     {
         if (col != null)
         {
-            Gizmos.DrawLine(col.bounds.max + Vector3.up * col.bounds.size.y * effectHeight, col.bounds.min + Vector3.up * col.bounds.size.y + Vector3.up * effectHeight);
-            Gizmos.DrawLine(col.bounds.max + Vector3.up * col.bounds.size.y * effectHeight, col.bounds.max);
+            Gizmos.DrawLine(col.bounds.max + Vector3.up * effectHeight, col.bounds.min + Vector3.up * col.bounds.size.y + Vector3.up * effectHeight);
+            Gizmos.DrawLine(col.bounds.max + Vector3.up * effectHeight, col.bounds.max);
             Gizmos.DrawLine(col.bounds.min + Vector3.up * col.bounds.size.y, col.bounds.min + Vector3.up * col.bounds.size.y + Vector3.up * effectHeight);
-
         }
     }
 }

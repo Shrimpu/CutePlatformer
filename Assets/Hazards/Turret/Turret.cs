@@ -33,10 +33,10 @@ public class Turret : MonoBehaviour
         {
             if (target != null && hasTarget)
             {
-                Gun.transform.localPosition = TargetPosition();
+                Gun.transform.position = TargetPosition() - transform.up / 2f + transform.position;
                 Gun.transform.rotation = Quaternion.Euler(0, 0, ZRotation(target) * Mathf.Rad2Deg);
                 Vector2 direction = target.position - transform.position;
-                bool hit = Physics2D.Raycast(transform.position, direction, direction.magnitude, raycastObstructions);
+                bool hit = Physics2D.Raycast(transform.position - transform.up / 2.05f, direction, direction.magnitude, raycastObstructions);
                 if (hit)
                 {
                     target = null;
@@ -51,7 +51,7 @@ public class Turret : MonoBehaviour
         }
         else if (isStatic)
         {
-            Gun.transform.localPosition = new Vector2(Mathf.Sin(-staticRotation * Mathf.Deg2Rad), Mathf.Cos(-staticRotation * Mathf.Deg2Rad)) * gunDistanceFromBody;
+            Gun.transform.localPosition = new Vector3(Mathf.Sin(-staticRotation * Mathf.Deg2Rad), Mathf.Cos(-staticRotation * Mathf.Deg2Rad)) * gunDistanceFromBody;
         }
         Shoot();
     }
@@ -106,9 +106,9 @@ public class Turret : MonoBehaviour
         {
             if (player.activeInHierarchy == true)
             {
-                Vector2 direction = player.transform.position - transform.position;
-                bool hit = Physics2D.Raycast(transform.position, direction, direction.magnitude, raycastObstructions);
-                Debug.DrawRay(transform.position, direction, Color.red, 0.01f);
+                Vector2 direction = player.transform.position - (transform.position - transform.up / 2);
+                bool hit = Physics2D.Raycast(transform.position - transform.up / 2.05f, direction, direction.magnitude, raycastObstructions);
+                Debug.DrawLine(firePoint.position, player.transform.position, Color.red);
                 if (!hit)
                 {
                     if (direction.magnitude < distance)
@@ -148,16 +148,16 @@ public class Turret : MonoBehaviour
 
     public float ZRotation(Transform targetPos)
     {
-        Vector2 dir = targetPos.position - transform.position;
+        Vector2 dir = targetPos.position - (transform.position - transform.up / 2f);
         Quaternion angle = Quaternion.FromToRotation(Vector2.up, dir);
         Vector3 _angle = angle.ToEulerAngles(); // this green line can fuck right off. it works perfectly
         return _angle.z;
     }
 
-    public Vector2 TargetPosition()
+    public Vector3 TargetPosition()
     {
         float angle = ZRotation(target);
-        Vector2 pos = new Vector2(Mathf.Sin(-angle), Mathf.Cos(-angle)) * gunDistanceFromBody;
+        Vector3 pos = new Vector3(Mathf.Sin(-angle), Mathf.Cos(-angle)) * gunDistanceFromBody;
         return pos;
     }
 
@@ -166,7 +166,7 @@ public class Turret : MonoBehaviour
         if (target != null)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, target.position);
+            Gizmos.DrawLine(firePoint.position, target.position);
         }
     }
 }
