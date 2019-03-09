@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour
     public float headCheckRadius = 0.4f;
     public float walldetectionHeight = 0.8f;
     public float walldetectionWidth = 0.1f;
+    public float jumpVelocity;
     [Space]
     public LayerMask ground;
     public bool Moving
@@ -119,7 +120,8 @@ public class Movement : MonoBehaviour
         }
         else if (!isGrounded && !fell && !Input.GetButton(jump))
         {
-            jumpsUsed++;
+            if (jumpPhysics.numberOfJumps > 1)
+                jumpsUsed++;
             fell = true;
         }
         else if (!fell)
@@ -142,6 +144,7 @@ public class Movement : MonoBehaviour
         if (Input.GetButton(jump) && jumpsUsed < jumpPhysics.numberOfJumps)
         {
             CanJump = true;
+            jumpVelocity = jumpPhysics.jumpVelocity;
         }
         else if (Input.GetButtonUp(jump))
         {
@@ -164,6 +167,7 @@ public class Movement : MonoBehaviour
             if (jumpTimeLeft > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpPhysics.jumpVelocity);
+                jumpVelocity -= Mathf.Sqrt(jumpVelocity) * 2f * Time.deltaTime;
                 jumpTimeLeft -= Time.deltaTime;
             }
             if (jumpTimeLeft <= 0 || headTrauma)

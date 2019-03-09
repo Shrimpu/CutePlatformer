@@ -5,14 +5,22 @@ using UnityEngine;
 public class DeathOnExit : MonoBehaviour
 {
     OnPlayerDeath deathScript;
+    bool quitting;
 
     private void Start()
     {
         deathScript = FindObjectOfType<OnPlayerDeath>();
+        Application.quitting += GameIsQuitting;
+    }
+
+    void GameIsQuitting()
+    {
+        quitting = true;
     }
 
     private void OnBecameInvisible()
     {
-        deathScript.KillPlayer(gameObject);
+        if (!quitting)
+            deathScript.KillPlayer(gameObject);
     }
 }

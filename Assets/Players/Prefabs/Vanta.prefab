@@ -185,14 +185,15 @@ MonoBehaviour:
   jumpPhysics:
     gravity: 0
     jumpVelocity: 0
-    minJumpHeight: 1
+    minJumpHeight: 0.8
     timeToJumpApex: 0.15
     jumpTime: 0.2
-    numberOfJumps: 2
+    numberOfJumps: 1
   jumpCheckRadius: 0.24
   headCheckRadius: 0.3485
   walldetectionHeight: 1.15
   walldetectionWidth: 0.14
+  jumpVelocity: 0
   ground:
     serializedVersion: 2
     m_Bits: 256

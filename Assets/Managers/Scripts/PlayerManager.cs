@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerPrefabManager))]
 public class PlayerManager : MonoBehaviour
 {
     public static event System.Action PlayersInSceneChanged;
 
+    public PlayerPrefabs playerPrefabs;
+
     public GameObject spawnEffect;
+    public bool canSpawnPlayer = true;
 
     public static int players;
-    PlayerPrefabManager prefabManager;
     Vector3 spawnPoint;
 
     bool playerSpawned1;
@@ -22,35 +23,38 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        prefabManager = GetComponent<PlayerPrefabManager>();
         spawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform.position;
+        players = 0;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown(InputManager.CustomInputs.P1Keyboard.jump) && players < 4 && !playerSpawned1)
+        if (canSpawnPlayer)
         {
-            SpawnPlayer(1);
-        }
-        if (Input.GetButtonDown(InputManager.CustomInputs.P2Keyboard.jump) && players < 4 && !playerSpawned2)
-        {
-            SpawnPlayer(2);
-        }
-        if (Input.GetButtonDown(InputManager.CustomInputs.P1.jump) && players < 4 && !playerSpawned3)
-        {
-            SpawnPlayer(3);
-        }
-        if (Input.GetButtonDown(InputManager.CustomInputs.P2.jump) && players < 4 && !playerSpawned4)
-        {
-            SpawnPlayer(4);
-        }
-        if (Input.GetButtonDown(InputManager.CustomInputs.P3.jump) && players < 4 && !playerSpawned5)
-        {
-            SpawnPlayer(5);
-        }
-        if (Input.GetButtonDown(InputManager.CustomInputs.P4.jump) && players < 4 && !playerSpawned6)
-        {
-            SpawnPlayer(6);
+            if (Input.GetButtonDown(InputManager.CustomInputs.P1Keyboard.jump) && players < 4 && !playerSpawned1)
+            {
+                SpawnPlayer(1);
+            }
+            if (Input.GetButtonDown(InputManager.CustomInputs.P2Keyboard.jump) && players < 4 && !playerSpawned2)
+            {
+                SpawnPlayer(2);
+            }
+            if (Input.GetButtonDown(InputManager.CustomInputs.P1.jump) && players < 4 && !playerSpawned3)
+            {
+                SpawnPlayer(3);
+            }
+            if (Input.GetButtonDown(InputManager.CustomInputs.P2.jump) && players < 4 && !playerSpawned4)
+            {
+                SpawnPlayer(4);
+            }
+            if (Input.GetButtonDown(InputManager.CustomInputs.P3.jump) && players < 4 && !playerSpawned5)
+            {
+                SpawnPlayer(5);
+            }
+            if (Input.GetButtonDown(InputManager.CustomInputs.P4.jump) && players < 4 && !playerSpawned6)
+            {
+                SpawnPlayer(6);
+            }
         }
     }
 
@@ -64,7 +68,7 @@ public class PlayerManager : MonoBehaviour
 
         if (spawnPoint != Vector3.zero)
         {
-            GameObject spawnedPlayer = Instantiate(prefabManager.GetPlayer(players), spawnPoint, Quaternion.identity);
+            GameObject spawnedPlayer = Instantiate(playerPrefabs.GetPlayer(players), spawnPoint, Quaternion.identity);
             if (spawnEffect != null)
                 Instantiate(spawnEffect, spawnedPlayer.transform.position, Quaternion.identity);
             Movement m = spawnedPlayer.GetComponent<Movement>();
@@ -167,4 +171,15 @@ public class PlayerManager : MonoBehaviour
     }
 
     #endregion
+
+    [System.Serializable]
+    public class PlayerPrefabs
+    {
+        public GameObject[] playerPrefabs = new GameObject[4];
+
+        public GameObject GetPlayer(int i)
+        {
+            return playerPrefabs[i];
+        }
+    }
 }

@@ -72,8 +72,8 @@
     <Compile Include="Assets\Hazards\Thwomp\Thwomp.cs" />
     <Compile Include="Assets\Hazards\Turret\Turret.cs" />
     <Compile Include="Assets\Managers\Scripts\InputManager.cs" />
+    <Compile Include="Assets\Managers\Scripts\LoadNextLevel.cs" />
     <Compile Include="Assets\Managers\Scripts\PlayerManager.cs" />
-    <Compile Include="Assets\Managers\Scripts\PlayerPrefabManager.cs" />
     <Compile Include="Assets\Players\Scripts\DeathOnExit.cs" />
     <Compile Include="Assets\Players\Scripts\Movement.cs" />
     <Compile Include="Assets\Players\Scripts\OnPlayerDeath.cs" />

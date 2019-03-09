@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4436960087805835069}
   - component: {fileID: 4436960087805835070}
-  - component: {fileID: 4436960087805835071}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: PlayerManager
@@ -44,21 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55142451f5462a4db5d022e924115b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnEffect: {fileID: 0}
---- !u!114 &4436960087805835071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4436960087805835064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf994f706282f84591dd065ffaf77d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   playerPrefabs:
-  - {fileID: 3561889352165464330, guid: b6d1b0c850c435240bfd281cf4f5b00c, type: 3}
-  - {fileID: 3561889352165464330, guid: b6d1b0c850c435240bfd281cf4f5b00c, type: 3}
-  - {fileID: 3561889352165464330, guid: b6d1b0c850c435240bfd281cf4f5b00c, type: 3}
-  - {fileID: 3561889352165464330, guid: b6d1b0c850c435240bfd281cf4f5b00c, type: 3}
+    playerPrefabs:
+    - {fileID: 3561889352165464330, guid: b6d1b0c850c435240bfd281cf4f5b00c, type: 3}
+    - {fileID: 3561889352165464330, guid: 2c744362810a38741aee565909eb4c67, type: 3}
+    - {fileID: 3561889352165464330, guid: 2c744362810a38741aee565909eb4c67, type: 3}
+    - {fileID: 3561889352165464330, guid: 2c744362810a38741aee565909eb4c67, type: 3}
+  spawnEffect: {fileID: 0}
+  canSpawnPlayer: 1

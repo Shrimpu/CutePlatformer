@@ -46,7 +46,8 @@ public class Turret : MonoBehaviour
             }
             else
             {
-                SearchClosestPlayer();
+                if (players != null)
+                    SearchClosestPlayer();
             }
         }
         else if (isStatic)

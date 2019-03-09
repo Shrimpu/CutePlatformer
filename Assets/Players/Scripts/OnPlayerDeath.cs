@@ -50,4 +50,9 @@ public class OnPlayerDeath : MonoBehaviour
         if (spawnEffect != null)
             Instantiate(spawnEffect, player.transform.position, Quaternion.identity);
     }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }
